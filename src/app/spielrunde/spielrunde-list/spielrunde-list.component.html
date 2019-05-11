@@ -1,0 +1,11 @@
+<div class="container">
+      <div *ngIf="spielrunde$ | async as spielRunde">
+          <div class="list-group" *ngFor="let spielRunde of spielRunde; let i = index">
+              <a [routerLink]="[i+1]" class="list-group-item list-group-item-action" routerLinkActive="active">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{spielRunde.datum}}</h5>
+                </div>
+              </a>
+            </div>
+      </div>
+</div>
