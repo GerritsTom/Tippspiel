@@ -35,12 +35,17 @@ export class SpielrundeEditComponent implements OnInit {
       this.initForm();
 
       // laden spiel
+      // nicht aus der DB, aber über eine Service
+      /*
       this.spielrundeService.getSpiel(this.spielId.toString()).subscribe(
         (response: any) => {
           console.log(response);
           this.spiel = response;
         }
-      );
+      );*/
+      this.spielrundeService.fetchedSpiel$.subscribe(value => {
+        this.spiel = value;
+      });
     });
   }
 

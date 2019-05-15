@@ -3,20 +3,31 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { SpielRunde } from './spielrunde.model';
 import { Spiel } from './spiel.model';
 import { map, catchError } from 'rxjs/operators';
-import { observable, throwError, Observable } from 'rxjs';
+import { observable, throwError, Observable, BehaviorSubject } from 'rxjs';
 
 
 @Injectable()
 export class SpielRundeService {
   private baseUrl = 'http://localhost:3000/api';
   private url = `${this.baseUrl}/`;
+  private fetchedSpieleSubject: BehaviorSubject<Spiel[]>;
+  public fetchedSpiele$: Observable<Spiel[]>;
+
+  private fetchedSpielSubject: BehaviorSubject<Spiel>;
+  public fetchedSpiel$: Observable<Spiel>;
 
   spielrunde$ = this.httpClient.get<SpielRunde[]>(this.url + 'spielrunden')
   .pipe(
     catchError(this.handleError)
   );
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    this.fetchedSpieleSubject = new BehaviorSubject<Spiel[]>([]);
+    this.fetchedSpiele$ = this.fetchedSpieleSubject.asObservable();
+
+    this.fetchedSpielSubject = new BehaviorSubject<Spiel>(null);
+    this.fetchedSpiel$ = this.fetchedSpielSubject.asObservable();
+  }
 
   /*
   */
@@ -35,8 +46,7 @@ export class SpielRundeService {
       .pipe(
         catchError(this.handleError),
         map((data) => {
-          return data.spiele.map(spiel =>
-            {
+          return data.spiele.map(spiel => {
               return {
                 spielId: spiel.spielId,
                 datum: spiel.datum,
@@ -63,6 +73,21 @@ export class SpielRundeService {
     return this.httpClient.get<{message: string; spiel: any}>(url + 'spiele/' + spielId)
       .pipe(
         map(response => {
+          this.fetchedSpielSubject.next(
+            {
+              spielId: response.spiel.spielId,
+              datum: response.spiel.datum,
+              gruppe: response.spiel.gruppe,
+              stadion: response.spiel.stadion,
+              ort: response.spiel.ort,
+              team1: response.spiel.team1,
+              team2: response.spiel.team2,
+              scoreTeam1: response.spiel.scoreTeam1,
+              scoreTeam2: response.spiel.scoreTeam2,
+              spielRunde: response.spiel.spielRunde,
+              id: response.spiel._id
+            });
+          /*
           return {
             spielId: response.spiel.spielId,
             datum: response.spiel.datum,
@@ -75,7 +100,7 @@ export class SpielRundeService {
             scoreTeam2: response.spiel.scoreTeam2,
             spielRunde: response.spiel.spielRunde,
             id: response.spiel._id
-          };
+          }; */
         })
       );
   }
@@ -88,6 +113,7 @@ export class SpielRundeService {
       // Serverside
       console.log('Server Side Error: ', errorResponse);
     }
-    return throwError('There is a problem with the service. Please try again later.');
+    // tslint:disable-next-line: max-line-length
+    return throwError('Die Anfrage kann nicht beantwortet werden, da im Server ein interner Fehler aufgetreten ist. \nVersuche Sie es später noch einmal.');
   }
 }
