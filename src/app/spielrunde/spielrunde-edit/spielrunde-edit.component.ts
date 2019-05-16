@@ -28,25 +28,17 @@ export class SpielrundeEditComponent implements OnInit {
       private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.route.params
-    .subscribe((params: Params) => {
+
+    this.spielrundeService.fetchedSpiel$.subscribe(value => {
+      this.spiel = value;
+    });
+
+    this.route.params.subscribe((params: Params) => {
       this.spielId = +params.spielId;
       this.spielrundeId = params.id;
-      this.initForm();
-
-      // laden spiel
-      // nicht aus der DB, aber über eine Service
-      /*
-      this.spielrundeService.getSpiel(this.spielId.toString()).subscribe(
-        (response: any) => {
-          console.log(response);
-          this.spiel = response;
-        }
-      );*/
-      this.spielrundeService.fetchedSpiel$.subscribe(value => {
-        this.spiel = value;
-      });
     });
+
+    this.initForm();
   }
 
   initForm() {
@@ -54,10 +46,6 @@ export class SpielrundeEditComponent implements OnInit {
       scoreTeam1: new FormControl(this.scoreTeam1, Validators.required),
       scoreTeam2: new FormControl(this.scoreTeam2, Validators.required)
     });
-  }
-
-  onSubmit() {
-
   }
 
   onBack() {

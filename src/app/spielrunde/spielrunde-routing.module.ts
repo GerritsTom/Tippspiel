@@ -4,12 +4,10 @@ import { SpielrundeComponent } from './spielrunde.component';
 import { SpielrundeDetailComponent } from './spielrunde-detail/spielrunde-detail.component';
 import { SpielrundeEditComponent } from './spielrunde-edit/spielrunde-edit.component';
 import { SpielResolver } from './spiel-resolver.service';
-import { SpielRundeResolver } from './spielrunde-resolver.service';
 
 const spielRundeRoutes: Routes = [{
-  path: 'spielrunde',
+  path: '',
   component: SpielrundeComponent,
-  resolve: {spielRunde: SpielRundeResolver},
   children: [
               {
                 path: ':id',
@@ -21,7 +19,7 @@ const spielRundeRoutes: Routes = [{
                 component: SpielrundeEditComponent
               }
             ]
-}]
+}];
 
 @NgModule({
   imports: [

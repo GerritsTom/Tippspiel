@@ -3,7 +3,7 @@ import { SpielRundeService } from '../spielrunde.service';
 import { SpielRunde } from '../spielrunde.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 
 @Component({
@@ -17,6 +17,7 @@ export class SpielrundeListComponent {
 
   spielrunde$: Observable<SpielRunde[]> = this.spielrundeService.spielrunde$
     .pipe(
+      tap(() => {console.log('using rxjs to load the data'); }),
       catchError(error => {
         this.error = error;
         this.toastr.error('Fehlermeldung', this.error);

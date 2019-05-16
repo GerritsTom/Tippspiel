@@ -23,16 +23,6 @@ export class SpielrundeDetailComponent implements OnInit {
      }
 
   ngOnInit() {
-    /*
-    const resolvedData: Spiel[] | string = this.route.snapshot.data.spiele;
-    if (Array.isArray(resolvedData)) {
-      this.spiele = resolvedData;
-    } else {
-      this.error = resolvedData;
-      this.toastr.error(this.error);
-    } */
-
-
     // use a resolver
     this.route.data.subscribe(
       (data: Data) => {
@@ -42,23 +32,12 @@ export class SpielrundeDetailComponent implements OnInit {
           this.error = data.spiele;
           this.toastr.error(this.error);
         }
-
     });
-
-    /*
-    this.route.params
-    .subscribe((params: Params) => {
-      this.id = params.id;
-
-      this.spielrundeService.getSpiele(this.id).subscribe(
-        (response: Spiel[]) => {
-            this.spiele = response;
-        });
-    }); */
   }
 
-  onTippen(spielId: number) {
-    this.router.navigate(['spiel', +spielId, 'edit'], {relativeTo: this.route});
+  onTippen(spiel: Spiel) {
+    this.spielrundeService.fetchedSpielSubject.next(spiel);
+    this.router.navigate(['spiel', +spiel.spielId, 'edit'], {relativeTo: this.route});
   }
 
 }
