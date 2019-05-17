@@ -19,8 +19,7 @@ export class SpielrundeDetailComponent implements OnInit {
     private spielrundeService: SpielRundeService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService) {
-     }
+    private toastr: ToastrService) {}
 
   ngOnInit() {
     // use a resolver

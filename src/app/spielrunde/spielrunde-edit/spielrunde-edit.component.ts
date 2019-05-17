@@ -54,13 +54,18 @@ export class SpielrundeEditComponent implements OnInit {
 
   onTippen() {
     this.tippService.addTipp(this.tippForm.value.scoreTeam1, this.tippForm.value.scoreTeam2, this.spiel.id)
-      .subscribe((response) => {
-        console.log(response);
-        if (!response) {
+      .subscribe(
+        response => {
+          if (!response) {
           this.toastr.error('Error occured!');
         } else {
           this.toastr.success('Tipp gespiechert');
+
+          // Tipp aus response object speichern in Subject....
+          this.router.navigate(['/spielrunde', this.spielrundeId]);
         }
+      }, error => {
+        this.toastr.error(error);
       });
   }
 
