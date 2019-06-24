@@ -5,6 +5,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { SpielResolver } from '../spielrunde/spiel-resolver.service';
 import { SpielRundeService } from '../spielrunde/spielrunde.service';
 import { TippService } from '../tippen/tipp.service';
+import { CanDeactivateGuard } from '../spielrunde/can-deactivate-guard.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TippService } from '../tippen/tipp.service';
   providers: [
     SpielRundeService,
     TippService,
-    SpielResolver
+    SpielResolver,
+    CanDeactivateGuard
   ]
 })
 export class CoreModule {

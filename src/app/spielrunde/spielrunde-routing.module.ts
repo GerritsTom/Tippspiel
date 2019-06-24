@@ -4,6 +4,7 @@ import { SpielrundeComponent } from './spielrunde.component';
 import { SpielrundeDetailComponent } from './spielrunde-detail/spielrunde-detail.component';
 import { SpielrundeEditComponent } from './spielrunde-edit/spielrunde-edit.component';
 import { SpielResolver } from './spiel-resolver.service';
+import { CanDeactivateGuard } from './can-deactivate-guard.service';
 
 const spielRundeRoutes: Routes = [{
   path: '',
@@ -16,7 +17,8 @@ const spielRundeRoutes: Routes = [{
               },
               {
                 path: ':id/spiel/:spielId/edit',
-                component: SpielrundeEditComponent
+                component: SpielrundeEditComponent,
+                canDeactivate: [CanDeactivateGuard]
               }
             ]
 }];

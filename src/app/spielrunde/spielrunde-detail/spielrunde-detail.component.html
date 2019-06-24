@@ -2,8 +2,9 @@
   <div class="card" *ngFor="let spiel of spiele; let i = index">
     <div class="card-body">
       <h5 class="card-title">{{spiel.team1}} - {{spiel.team2}}</h5>
-      <p class="card-text">{{spiel.ort}} {{spiel.datum}}  {{spiel.stadion}}</p>
-      <button class="btn btn-outline-dark" (click)="onTippen(spiel)">Tippen</button>
+      <p class="card-text">{{spiel.ort}} {{spiel.datum}}  {{spiel.stadion}}
+        <button class="btn btn-dark" (click)="onTippen(spiel)" style="margin-left: 1rem;">Tippen</button>
+      </p>
     </div>
   </div>
 </div>

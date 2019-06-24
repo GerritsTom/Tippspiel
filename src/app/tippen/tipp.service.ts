@@ -26,7 +26,7 @@ export class TippService {
       user: '5ccc8bde96af1143dcc21a66',
       spiel: spielId
     };
-    return this.http.post(url + 'tipps/', postData)
+    return this.http.post<{message: string, tipp: any}>(url + 'tipps/', postData)
     .pipe(
       catchError(this.handleError)
     );
